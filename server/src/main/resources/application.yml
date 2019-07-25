@@ -1,0 +1,43 @@
+app:
+  eventful:
+  	app-key: bt4mXBGGsXBb2kZh
+  	base-url: http://api.eventful.com/json
+
+spring:
+  # SPRING MVC (WebMvcProperties)
+  mvc:
+    throw-exception-if-no-handler-found: true
+    async:
+      request-timeout: 300000
+
+  # JACKSON (JacksonProperties)
+  jackson:
+    # JSON Serialization (SerializationFeature)
+    # SEE http://docs.spring.io/spring-boot/docs/current/reference/html/howto-spring-mvc.html#howto-customize-the-jackson-objectmapper
+    serialization:
+      WRITE_ENUMS_USING_TO_STRING: true
+      WRITE_DATES_AS_TIMESTAMPS: false
+
+    # JSON Deserialization (DeserializationFeature)
+    # SEE http://docs.spring.io/spring-boot/docs/current/reference/html/howto-spring-mvc.html#howto-customize-the-jackson-objectmapper
+    deserialization:
+      READ_ENUMS_USING_TO_STRING: true
+
+  # HTTP encoding (HttpEncodingProperties)
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+  # SPRING RESOURCES HANDLING (ResourceProperties)
+  resources:
+    add-mappings: false
+
+server:
+  context-path: /hrs
+  tomcat:
+    basedir: @tomcat.directory@
+    accesslog:
+      directory: log
+      enabled: true
