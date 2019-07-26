@@ -1,7 +1,10 @@
 app:
   eventful:
-  	app-key: bt4mXBGGsXBb2kZh
-  	base-url: http://api.eventful.com/json
+    api-key: @eventful.api.key@
+    base-url: http://api.eventful.com/json
+  open-weather-map:
+    api-key: @openweathermap.api.key@
+    base-url: http://api.openweathermap.org/data/2.5
 
 spring:
   # SPRING MVC (WebMvcProperties)
@@ -35,7 +38,7 @@ spring:
     add-mappings: false
 
 server:
-  context-path: /hrs
+  context-path: /london-events
   tomcat:
     basedir: @tomcat.directory@
     accesslog:

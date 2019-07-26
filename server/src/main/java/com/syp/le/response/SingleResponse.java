@@ -47,7 +47,8 @@ public class SingleResponse<D extends BaseDto> implements Callable<ResponseEntit
 	 * Defines how to get the {@linkplain BaseDto}
 	 * 
 	 * @author <a href="mailto:ricky.shiyouping@gmail.com">Ricky Shi</a>
-	 * @since Jun 28, 2019
+	 * 
+	 * @since 25 Jul 2019
 	 *
 	 * @param <D> subclass of {@linkplain BaseDto}
 	 */

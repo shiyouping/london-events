@@ -20,6 +20,9 @@ public class AppConfig {
 	private Eventful eventful = new Eventful();
 
 	@Valid
+	private OpenWeatherMap openWeatherMap = new OpenWeatherMap();
+
+	@Valid
 	private TaskExecutor taskExecutor = new TaskExecutor();
 
 	public Eventful getEventful() {
@@ -28,6 +31,14 @@ public class AppConfig {
 
 	public void setEventful(Eventful eventful) {
 		this.eventful = eventful;
+	}
+
+	public OpenWeatherMap getOpenWeatherMap() {
+		return openWeatherMap;
+	}
+
+	public void setOpenWeatherMap(OpenWeatherMap openWeatherMap) {
+		this.openWeatherMap = openWeatherMap;
 	}
 
 	public TaskExecutor getTaskExecutor() {
@@ -40,16 +51,39 @@ public class AppConfig {
 
 	public static class Eventful {
 		@NotEmpty
-		private String appKey;
+		private String apiKey;
 		@NotEmpty
 		private String baseUrl;
 
-		public String getAppKey() {
-			return appKey;
+		public String getApiKey() {
+			return apiKey;
 		}
 
-		public void setAppKey(String appKey) {
-			this.appKey = appKey;
+		public void setApiKey(String apiKey) {
+			this.apiKey = apiKey;
+		}
+
+		public String getBaseUrl() {
+			return baseUrl;
+		}
+
+		public void setBaseUrl(String baseUrl) {
+			this.baseUrl = baseUrl;
+		}
+	}
+
+	public static class OpenWeatherMap {
+		@NotEmpty
+		private String apiKey;
+		@NotEmpty
+		private String baseUrl;
+
+		public String getApiKey() {
+			return apiKey;
+		}
+
+		public void setApiKey(String apiKey) {
+			this.apiKey = apiKey;
 		}
 
 		public String getBaseUrl() {

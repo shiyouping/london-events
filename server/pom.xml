@@ -29,6 +29,7 @@
 		<commons-collections4.version>4.1</commons-collections4.version>
 		<jsr305.version>3.0.2</jsr305.version>
 		<powermock.version>1.7.3</powermock.version>
+		<fastjson.version>1.2.58</fastjson.version>
 
 		<!-- Plugin properties -->
 		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
@@ -74,6 +75,12 @@
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct-jdk8</artifactId>
 			<version>${mapstruct.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>${fastjson.version}</version>
 		</dependency>
 
 		<dependency>
@@ -206,6 +213,8 @@
 			</activation>
 			<properties>
 				<tomcat.directory>${project.build.directory}/tomcat</tomcat.directory>
+				<eventful.api.key>bt4mXBGGsXBb2kZh</eventful.api.key>
+				<openweathermap.api.key>611ee80c8ab80e07e89364b4e69372c6</openweathermap.api.key>
 			</properties>
 		</profile>
 	</profiles>

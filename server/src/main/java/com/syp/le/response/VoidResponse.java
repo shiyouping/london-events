@@ -37,7 +37,8 @@ public class VoidResponse implements Callable<ResponseEntity<?>> {
 	 * Defines how to do the REST response without returning any body content
 	 * 
 	 * @author <a href="mailto:ricky.shiyouping@gmail.com">Ricky Shi</a>
-	 * @since Jun 28, 2019
+	 * 
+	 * @since 25 Jul 2019
 	 *
 	 */
 	@FunctionalInterface

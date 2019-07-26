@@ -10,7 +10,8 @@ import org.apache.commons.lang3.StringUtils;
  * A UUID generator
  * 
  * @author <a href="mailto:ricky.shiyouping@gmail.com">Ricky Shi</a>
- * @since Jun 29, 2019
+ * 
+ * @since 25 Jul 2019
  */
 public class UniqueId {
 
