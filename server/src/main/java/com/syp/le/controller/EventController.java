@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.syp.le.client.EventfulClient;
-import com.syp.le.model.EventfulModel;
+import com.syp.le.client.OpenWeatherMapClient;
+import com.syp.le.model.CurrentWeatherModel;
 import com.syp.le.response.VoidResponse;
 
 /**
@@ -19,14 +19,12 @@ import com.syp.le.response.VoidResponse;
 public class EventController {
 
 	@Autowired
-	private EventfulClient client;
+	private OpenWeatherMapClient client;
 
 	@GetMapping
 	public VoidResponse getEvents() {
-
 		return new VoidResponse(() -> {
-			EventfulModel model = client.searchEvents(null, "London", null, null, null, null, null, null, null, null,
-					null, null, null, null, null, null, null);
+			CurrentWeatherModel model = client.getCurrentWeather(51.544393f, -0.0227277f);
 			System.out.println(model);
 		});
 	}

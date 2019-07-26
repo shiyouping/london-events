@@ -10,7 +10,6 @@ import javax.annotation.Nullable;
 public class StringUtil {
 
 	private StringUtil() {
-
 	}
 
 	@Nullable

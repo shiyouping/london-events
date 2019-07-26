@@ -1,5 +1,9 @@
 package com.syp.le.model;
 
+import java.util.List;
+
+import org.pojomatic.annotations.AutoProperty;
+
 import com.alibaba.fastjson.annotation.JSONField;
 
 /**
@@ -7,6 +11,7 @@ import com.alibaba.fastjson.annotation.JSONField;
  *
  * @since 26 Jul 2019
  */
+@AutoProperty
 public class CurrentWeatherModel extends BaseModel {
 
 	private static final long serialVersionUID = 1L;
@@ -14,7 +19,7 @@ public class CurrentWeatherModel extends BaseModel {
 	@JSONField(name = "coord")
 	private CoordinateModel coordinate;
 	@JSONField(name = "weather")
-	private WeatherModel weather;
+	private List<WeatherModel> weather;
 	@JSONField(name = "dt")
 	private Long time;
 	@JSONField(name = "timezone")
@@ -30,11 +35,11 @@ public class CurrentWeatherModel extends BaseModel {
 		this.coordinate = coordinate;
 	}
 
-	public WeatherModel getWeather() {
+	public List<WeatherModel> getWeather() {
 		return weather;
 	}
 
-	public void setWeather(WeatherModel weather) {
+	public void setWeather(List<WeatherModel> weather) {
 		this.weather = weather;
 	}
 
@@ -62,6 +67,7 @@ public class CurrentWeatherModel extends BaseModel {
 		this.name = name;
 	}
 
+	@AutoProperty
 	public static class CoordinateModel extends BaseModel {
 		private static final long serialVersionUID = 1L;
 
@@ -87,6 +93,7 @@ public class CurrentWeatherModel extends BaseModel {
 		}
 	}
 
+	@AutoProperty
 	public static class WeatherModel extends BaseModel {
 		private static final long serialVersionUID = 1L;
 

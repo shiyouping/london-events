@@ -2,6 +2,7 @@ package com.syp.le.client;
 
 import javax.annotation.Nullable;
 
+import com.syp.le.model.EventCategoryModel;
 import com.syp.le.model.EventfulModel;
 
 /**
@@ -23,4 +24,10 @@ public interface EventfulClient {
 			@Nullable String imageSizes, @Nullable Integer languages, @Nullable String mature, @Nullable String include,
 			@Nullable Boolean changeMultiDayStart);
 
+	/**
+	 * Get event categories
+	 * 
+	 * See detailed document at https://api.eventful.com/docs/categories/list
+	 */
+	EventCategoryModel getCategoryList();
 }
