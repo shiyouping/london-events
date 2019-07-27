@@ -217,5 +217,17 @@
 				<openweathermap.api.key>611ee80c8ab80e07e89364b4e69372c6</openweathermap.api.key>
 			</properties>
 		</profile>
+		
+		<profile>
+			<id>production</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<tomcat.directory>/opt/london-events/tomcat</tomcat.directory>
+				<eventful.api.key>bt4mXBGGsXBb2kZh</eventful.api.key>
+				<openweathermap.api.key>611ee80c8ab80e07e89364b4e69372c6</openweathermap.api.key>
+			</properties>
+		</profile>
 	</profiles>
 </project>

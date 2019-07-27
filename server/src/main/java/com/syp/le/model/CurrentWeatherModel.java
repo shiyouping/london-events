@@ -7,6 +7,9 @@ import org.pojomatic.annotations.AutoProperty;
 import com.alibaba.fastjson.annotation.JSONField;
 
 /**
+ * 
+ * Hold the information of OpenWeatherMap current weather API
+ * 
  * @author <a href="mailto:ricky.shiyouping@gmail.com">Ricky Shi</a>
  *
  * @since 26 Jul 2019

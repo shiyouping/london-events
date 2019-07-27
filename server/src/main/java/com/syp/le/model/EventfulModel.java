@@ -7,6 +7,9 @@ import org.pojomatic.annotations.AutoProperty;
 import com.alibaba.fastjson.annotation.JSONField;
 
 /**
+ * 
+ * Hold the information of Eventful event search API
+ * 
  * @author <a href="mailto:ricky.shiyouping@gmail.com">Ricky Shi</a>
  *
  * @since 26 Jul 2019
@@ -180,6 +183,8 @@ public class EventfulModel extends BaseModel {
 		private String owner;
 		@JSONField(name = "modified")
 		private String modificationTime;
+		@JSONField(name = "image")
+		private ImageModel image;
 
 		public String getUrl() {
 			return url;
@@ -387,6 +392,82 @@ public class EventfulModel extends BaseModel {
 
 		public void setModificationTime(String modificationTime) {
 			this.modificationTime = modificationTime;
+		}
+
+		public ImageModel getImage() {
+			return image;
+		}
+
+		public void setImage(ImageModel image) {
+			this.image = image;
+		}
+	}
+
+	@AutoProperty
+	public static class ImageModel extends BaseModel {
+
+		private static final long serialVersionUID = 1L;
+
+		private ImageMetaModel small;
+		private ImageMetaModel medium;
+		private ImageMetaModel thumb;
+
+		public ImageMetaModel getSmall() {
+			return small;
+		}
+
+		public void setSmall(ImageMetaModel small) {
+			this.small = small;
+		}
+
+		public ImageMetaModel getMedium() {
+			return medium;
+		}
+
+		public void setMedium(ImageMetaModel medium) {
+			this.medium = medium;
+		}
+
+		public ImageMetaModel getThumb() {
+			return thumb;
+		}
+
+		public void setThumb(ImageMetaModel thumb) {
+			this.thumb = thumb;
+		}
+	}
+
+	@AutoProperty
+	public static class ImageMetaModel extends BaseModel {
+
+		private static final long serialVersionUID = 1L;
+
+		private String width;
+		private String height;
+		private String url;
+
+		public String getWidth() {
+			return width;
+		}
+
+		public void setWidth(String width) {
+			this.width = width;
+		}
+
+		public String getHeight() {
+			return height;
+		}
+
+		public void setHeight(String height) {
+			this.height = height;
+		}
+
+		public String getUrl() {
+			return url;
+		}
+
+		public void setUrl(String url) {
+			this.url = url;
 		}
 	}
 }

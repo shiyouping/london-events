@@ -5,6 +5,9 @@ import java.util.List;
 import org.pojomatic.annotations.AutoProperty;
 
 /**
+ * 
+ * Hold the information of Eventful event category API
+ * 
  * @author <a href="mailto:ricky.shiyouping@gmail.com">Ricky Shi</a>
  *
  * @since Jul 26, 2019
