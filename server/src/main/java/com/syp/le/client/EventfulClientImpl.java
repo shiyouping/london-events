@@ -17,6 +17,8 @@ import com.alibaba.fastjson.JSON;
 import com.syp.le.config.AppConfig;
 import com.syp.le.model.EventCategoryModel;
 import com.syp.le.model.EventfulModel;
+import com.syp.le.model.EventfulModel.EventModel;
+import com.syp.le.utils.EventfulUtil;
 import com.syp.le.utils.MapUtil;
 import com.syp.le.utils.StringUtil;
 
@@ -33,6 +35,7 @@ public class EventfulClientImpl implements EventfulClient {
 	private final String apiKey;
 	private final String eventSearchApiUrl;
 	private final String eventCategoryApiUrl;
+	private final String eventGetApiUrl;
 	private final RestTemplate restTemplate;
 
 	@Autowired
@@ -44,6 +47,7 @@ public class EventfulClientImpl implements EventfulClient {
 		this.apiKey = config.getEventful().getApiKey();
 		this.eventSearchApiUrl = config.getEventful().getBaseUrl() + "/events/search";
 		this.eventCategoryApiUrl = config.getEventful().getBaseUrl() + "/categories/list";
+		this.eventGetApiUrl = config.getEventful().getBaseUrl() + "/events/get";
 	}
 
 	@Override
@@ -75,8 +79,15 @@ public class EventfulClientImpl implements EventfulClient {
 		String uri = UriComponentsBuilder.fromUriString(eventSearchApiUrl).queryParams(queryParams).toUriString();
 		logger.info("Searching events uri={}", uri);
 
-		String response = restTemplate.getForObject(uri, String.class);
-		return JSON.parseObject(response, EventfulModel.class);
+		String response = null;
+		try {
+			response = restTemplate.getForObject(uri, String.class);
+			EventfulUtil.checkErrorResponse(response);
+			return JSON.parseObject(response, EventfulModel.class);
+		} catch (Exception e) {
+			logger.error(String.format("Failed to request or parse events data. Response=%s", response), e);
+			return null;
+		}
 	}
 
 	@Override
@@ -87,7 +98,36 @@ public class EventfulClientImpl implements EventfulClient {
 		String uri = UriComponentsBuilder.fromUriString(eventCategoryApiUrl).queryParams(queryParams).toUriString();
 		logger.info("Getting event categories uri={}", uri);
 
-		String response = restTemplate.getForObject(uri, String.class);
-		return JSON.parseObject(response, EventCategoryModel.class);
+		String response = null;
+		try {
+			response = restTemplate.getForObject(uri, String.class);
+			EventfulUtil.checkErrorResponse(response);
+			return JSON.parseObject(response, EventCategoryModel.class);
+		} catch (Exception e) {
+			logger.error(String.format("Failed to request or parse category data. Response=%s", response), e);
+			return null;
+		}
+	}
+
+	@Override
+	public EventModel getAnEvent(String id) {
+		checkNotNull(id, "id cannot be null");
+
+		MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
+		MapUtil.add(queryParams, "app_key", apiKey);
+		MapUtil.add(queryParams, "id", id);
+
+		String uri = UriComponentsBuilder.fromUriString(eventGetApiUrl).queryParams(queryParams).toUriString();
+		logger.info("Getting an event uri={}", uri);
+
+		String response = null;
+		try {
+			response = restTemplate.getForObject(uri, String.class);
+			EventfulUtil.checkErrorResponse(response);
+			return JSON.parseObject(response, EventModel.class);
+		} catch (Exception e) {
+			logger.error(String.format("Failed to request or parse event data. Response=%s", response), e);
+			return null;
+		}
 	}
 }

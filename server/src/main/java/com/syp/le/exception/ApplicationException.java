@@ -5,7 +5,7 @@ package com.syp.le.exception;
  *
  * @since 25 Jul 2019
  */
-public abstract class ApplicationException extends RuntimeException {
+public class ApplicationException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 

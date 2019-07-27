@@ -16,5 +16,6 @@ public interface OpenWeatherMapClient {
 	 * 
 	 * See detailed document at https://openweathermap.org/current
 	 */
+	@Nonnull
 	CurrentWeatherModel getCurrentWeather(@Nonnull Float latitude, @Nonnull Float longitude);
 }
