@@ -55,7 +55,12 @@ public class OpenWeatherMapClientImpl implements OpenWeatherMapClient {
 		String uri = UriComponentsBuilder.fromUriString(currentWeatherApiUrl).queryParams(queryParams).toUriString();
 		logger.info("Getting current weather data uri={}", uri);
 
-		String response = restTemplate.getForObject(uri, String.class);
-		return JSON.parseObject(response, CurrentWeatherModel.class);
+		try {
+			String response = restTemplate.getForObject(uri, String.class);
+			return JSON.parseObject(response, CurrentWeatherModel.class);
+		} catch (Exception e) {
+			logger.error("Failed to request or parse current weather", e);
+			return null;
+		}
 	}
 }
