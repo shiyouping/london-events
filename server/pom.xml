@@ -28,8 +28,9 @@
 		<commons-lang3.version>3.7</commons-lang3.version>
 		<commons-collections4.version>4.1</commons-collections4.version>
 		<jsr305.version>3.0.2</jsr305.version>
-		<powermock.version>1.7.3</powermock.version>
 		<fastjson.version>1.2.58</fastjson.version>
+		<powermock.version>1.7.3</powermock.version>
+		<wiremock.version>1.2.7.RELEASE</wiremock.version>
 
 		<!-- Plugin properties -->
 		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
@@ -94,13 +95,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-			<optional>true</optional>
-		</dependency>
-
-		<dependency>
 			<!-- Additional message formatters and converters in MVC -->
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-jsr310</artifactId>
@@ -115,6 +109,13 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
 
@@ -142,6 +143,13 @@
 			<groupId>org.powermock</groupId>
 			<artifactId>powermock-module-junit4</artifactId>
 			<version>${powermock.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-contract-wiremock</artifactId>
+			<version>${wiremock.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -217,7 +225,7 @@
 				<openweathermap.api.key>611ee80c8ab80e07e89364b4e69372c6</openweathermap.api.key>
 			</properties>
 		</profile>
-		
+
 		<profile>
 			<id>production</id>
 			<activation>
