@@ -7,12 +7,12 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.springframework.context.ApplicationContextException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
+import com.syp.le.exception.ApplicationException;
 import com.syp.le.model.EventfulErrorModel;
 
 /**
@@ -40,7 +40,7 @@ public class EventfulUtil {
 		EventfulErrorModel model = JSON.parseObject(response, EventfulErrorModel.class);
 
 		if (errorValue.equals(model.getError())) {
-			throw new ApplicationContextException(response);
+			throw new ApplicationException(response);
 		}
 	}
 
