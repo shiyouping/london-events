@@ -1,12 +1,9 @@
 import React, { PureComponent } from "react";
 
-export default class App extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+import Navigator from "scenes/navigator/navigator";
 
+export default class App extends PureComponent {
   render() {
-    return <div></div>
+    return <Navigator />;
   }
 }
