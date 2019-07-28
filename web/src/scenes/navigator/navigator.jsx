@@ -15,7 +15,7 @@ import {
   PaginationLink
 } from "reactstrap";
 
-import EventTab from "component/event-tab/event-tab";
+import EventTab from "components/event-tab/event-tab";
 
 const CATEGORY_MUSIC = "music";
 const CATEGORY_CONFERENCE = "conference";

@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { Container, Row, Col } from "reactstrap";
 
-import EventGrid from "component/event-grid/event-grid";
+import EventGrid from "components/event-grid/event-grid";
 
 export default class EventTab extends PureComponent {
   getGrid(event, key) {
