@@ -18,4 +18,10 @@ public interface OpenWeatherMapClient {
 	 */
 	@Nonnull
 	CurrentWeatherModel getCurrentWeather(@Nonnull Float latitude, @Nonnull Float longitude);
+
+	/*****************************************************************************
+	 * OpenWeatherMap doesn't provide free API of future weather for personal use.
+	 * So this application doesn't provide API to query weather forecast
+	 *****************************************************************************
+	 */
 }
