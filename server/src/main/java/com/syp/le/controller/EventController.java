@@ -37,7 +37,7 @@ import com.syp.le.service.EventService;
 public class EventController {
 
 	private static final Logger logger = LoggerFactory.getLogger(EventController.class);
-	private static final String locationLondon = "London";
+	private static final String LOCATION_LONDON = "London";
 
 	private final EventService eventService;
 	private final CustomEventMapper eventMapper;
@@ -62,7 +62,7 @@ public class EventController {
 				throw new ClientException(String.format("Invalid category %s", category), HttpStatus.BAD_REQUEST);
 			}
 
-			Page<CustomEventModel> modelPage = eventService.findEvents(pageable, category, null, locationLondon, null);
+			Page<CustomEventModel> modelPage = eventService.findEvents(pageable, category, null, LOCATION_LONDON, null);
 			return eventMapper.toDtoPage(modelPage, pageable);
 		});
 	}

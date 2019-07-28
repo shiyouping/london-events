@@ -22,10 +22,10 @@ import com.syp.le.model.EventfulErrorModel;
  */
 public class EventfulUtil {
 
-	private static final String errorValue = "1";
-	private static final String eventSortDirectionAscending = "ascending";
-	private static final String eventSortDirectionDescending = "descending";
-	private static final List<String> eventSortOrders = Lists.newArrayList("popularity", "date", "relevance");
+	private static final String ERROR_VALUE = "1";
+	private static final String EVENT_SORT_DIRECTION_ASCENDING = "ascending";
+	private static final String EVENT_SORT_DIRECTION_DESCENDING = "descending";
+	private static final List<String> EVENT_SORT_ORDERS = Lists.newArrayList("popularity", "date", "relevance");
 
 	private EventfulUtil() {
 	}
@@ -39,7 +39,7 @@ public class EventfulUtil {
 
 		EventfulErrorModel model = JSON.parseObject(response, EventfulErrorModel.class);
 
-		if (errorValue.equals(model.getError())) {
+		if (ERROR_VALUE.equals(model.getError())) {
 			throw new ApplicationException(response);
 		}
 	}
@@ -54,7 +54,7 @@ public class EventfulUtil {
 
 		while (pageable.getSort().iterator().hasNext()) {
 			String property = pageable.getSort().iterator().next().getProperty();
-			if (eventSortOrders.contains(property)) {
+			if (EVENT_SORT_ORDERS.contains(property)) {
 				return property;
 			}
 		}
@@ -73,9 +73,9 @@ public class EventfulUtil {
 		while (pageable.getSort().iterator().hasNext()) {
 			Direction direction = pageable.getSort().iterator().next().getDirection();
 			if (direction.equals(Direction.ASC)) {
-				return eventSortDirectionAscending;
+				return EVENT_SORT_DIRECTION_ASCENDING;
 			} else if (direction.equals(Direction.DESC)) {
-				return eventSortDirectionDescending;
+				return EVENT_SORT_DIRECTION_DESCENDING;
 			}
 		}
 

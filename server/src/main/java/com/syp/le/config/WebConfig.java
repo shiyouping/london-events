@@ -29,7 +29,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @ServletComponentScan
 public class WebConfig {
 
-	private static Logger logger = LoggerFactory.getLogger(WebConfig.class);
+	private static final Logger logger = LoggerFactory.getLogger(WebConfig.class);
 	private final AppConfig appConfig;
 
 	@Autowired

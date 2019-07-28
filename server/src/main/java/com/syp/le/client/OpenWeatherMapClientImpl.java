@@ -27,6 +27,9 @@ import com.syp.le.utils.MapUtil;
 public class OpenWeatherMapClientImpl implements OpenWeatherMapClient {
 
 	private static final Logger logger = LoggerFactory.getLogger(OpenWeatherMapClientImpl.class);
+	private static final String QUERY_PARAM_APP_ID = "APPID";
+	private static final String QUERY_PARAM_LONGITUDE = "lon";
+	private static final String QUERY_PARAM_LATITUDE = "lat";
 
 	private final String apiKey;
 	private final RestTemplate restTemplate;
@@ -48,9 +51,9 @@ public class OpenWeatherMapClientImpl implements OpenWeatherMapClient {
 		checkNotNull(longitude, "longitude cannot be null");
 
 		MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
-		MapUtil.add(queryParams, "lat", latitude.toString());
-		MapUtil.add(queryParams, "lon", longitude.toString());
-		MapUtil.add(queryParams, "APPID", apiKey);
+		MapUtil.add(queryParams, QUERY_PARAM_LATITUDE, latitude.toString());
+		MapUtil.add(queryParams, QUERY_PARAM_LONGITUDE, longitude.toString());
+		MapUtil.add(queryParams, QUERY_PARAM_APP_ID, apiKey);
 
 		String uri = UriComponentsBuilder.fromUriString(currentWeatherApiUrl).queryParams(queryParams).toUriString();
 		logger.info("Getting current weather data uri={}", uri);

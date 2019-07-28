@@ -41,7 +41,7 @@ import com.syp.le.utils.EventfulUtil;
 @CacheConfig(cacheNames = "events")
 public class EventServiceImpl implements EventService {
 
-	private static final String unknown = "Unknown";
+	private static final String UNKNOWN = "Unknown";
 	private static final Logger logger = LoggerFactory.getLogger(EventServiceImpl.class);
 
 	private final EventfulClient eventfulClient;
@@ -138,19 +138,19 @@ public class EventServiceImpl implements EventService {
 
 	private String getWeather(EventModel eventModel) {
 		if (eventModel == null || eventModel.getLatitude() == null || eventModel.getLongitude() == null) {
-			return unknown;
+			return UNKNOWN;
 		}
 
 		CurrentWeatherModel weatherModel = weatherClient.getCurrentWeather(eventModel.getLatitude(),
 				eventModel.getLongitude());
 
 		if (CollectionUtils.isEmpty(weatherModel.getWeather())) {
-			return unknown;
+			return UNKNOWN;
 		}
 
 		String description = weatherModel.getWeather().get(0).getMain();
 		if (StringUtils.isBlank(description)) {
-			return unknown;
+			return UNKNOWN;
 		}
 
 		return description;
