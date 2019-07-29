@@ -30,4 +30,6 @@ public interface EventService {
 
 	@Nonnull
 	List<String> findEventfulCategories();
+
+	void clearEventCache();
 }

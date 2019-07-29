@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -70,6 +71,7 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
+	@Cacheable
 	public Page<CustomEventModel> findEvents(Pageable pageable, String category, String keywords, String location,
 			String date) {
 		checkNotNull(pageable, "pageable cannot be null");
@@ -88,6 +90,7 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
+	@Cacheable
 	public CustomEventModel findOneById(String id) {
 		checkNotNull(id, "id cannot be null");
 		logger.info("Finding an event by id={}...", id);
@@ -98,6 +101,12 @@ public class EventServiceImpl implements EventService {
 		}
 
 		return toCustomEventModel(eventModel);
+	}
+
+	@Override
+	@CacheEvict(allEntries = true)
+	public void clearEventCache() {
+		logger.info("****** Clearing Event Cache ****** ");
 	}
 
 	private Page<CustomEventModel> toPage(EventfulModel eventfulModel, Pageable pageable) {
