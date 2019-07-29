@@ -106,7 +106,7 @@ public class EventServiceImpl implements EventService {
 	@Override
 	@CacheEvict(allEntries = true)
 	public void clearEventCache() {
-		logger.info("****** Clearing Event Cache ****** ");
+		logger.info("****** Clearing Event Cache ******");
 	}
 
 	private Page<CustomEventModel> toPage(EventfulModel eventfulModel, Pageable pageable) {
