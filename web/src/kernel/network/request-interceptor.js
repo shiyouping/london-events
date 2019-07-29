@@ -9,6 +9,7 @@ export default class RequestInterceptor {
   }
 
   interceptRequestError(error) {
+    console.error("Failed to send the http request", error);
     Promise.reject(error);
   }
 }

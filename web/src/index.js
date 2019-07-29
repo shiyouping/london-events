@@ -15,6 +15,7 @@ import App from "app";
 
 // Initilize system-scoped service
 import "services/app/system-service";
+import "services/app/notification-service";
 
 const rootElement = document.querySelector("#root");
 if (rootElement) {

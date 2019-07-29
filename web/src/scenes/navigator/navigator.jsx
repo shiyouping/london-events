@@ -16,6 +16,8 @@ import {
 } from "reactstrap";
 
 import EventTab from "components/event-tab/event-tab";
+import EventService from "services/rest/event-service";
+import ResponseResolver from "kernel/network/response-resolver";
 
 const CATEGORY_MUSIC = "music";
 const CATEGORY_CONFERENCE = "conference";
@@ -33,93 +35,12 @@ export default class Event extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.toggle = this.toggle.bind(this);
     this.state = {
       activeTab: CATEGORY_MUSIC,
-      events: [
-        {
-          imageUrl:
-            "https://d1marr3m5x4iac.cloudfront.net/images/block250/I0-001/033/452/240-0.jpeg_/blink182-40.jpeg",
-          title: "Blink-182 & Lil Wayne in Inglewood",
-          startTime: "2019-07-05 05:15:44",
-          venueAddress: "90 Wallis Road",
-          weather: "Rain",
-          city: "London"
-        },
-        {
-          imageUrl:
-            "https://d1marr3m5x4iac.cloudfront.net/images/block250/I0-001/033/452/240-0.jpeg_/blink182-40.jpeg",
-          title: "Blink-182 & Lil Wayne in Inglewood",
-          startTime: "2019-07-05 05:15:44",
-          venueAddress: "90 Wallis Road",
-          weather: "Rain",
-          city: "London"
-        },
-        {
-          imageUrl:
-            "https://d1marr3m5x4iac.cloudfront.net/images/block250/I0-001/033/452/240-0.jpeg_/blink182-40.jpeg",
-          title: "Blink-182 & Lil Wayne in Inglewood",
-          startTime: "2019-07-05 05:15:44",
-          venueAddress: "90 Wallis Road",
-          weather: "Rain",
-          city: "London"
-        },
-        {
-          imageUrl:
-            "https://d1marr3m5x4iac.cloudfront.net/images/block250/I0-001/033/452/240-0.jpeg_/blink182-40.jpeg",
-          title: "Blink-182 & Lil Wayne in Inglewood",
-          startTime: "2019-07-05 05:15:44",
-          venueAddress: "90 Wallis Road",
-          weather: "Rain",
-          city: "London"
-        },
-        {
-          imageUrl:
-            "https://d1marr3m5x4iac.cloudfront.net/images/block250/I0-001/033/452/240-0.jpeg_/blink182-40.jpeg",
-          title: "Blink-182 & Lil Wayne in Inglewood",
-          startTime: "2019-07-05 05:15:44",
-          venueAddress: "90 Wallis Road",
-          weather: "Rain",
-          city: "London"
-        },
-        {
-          imageUrl:
-            "https://d1marr3m5x4iac.cloudfront.net/images/block250/I0-001/033/452/240-0.jpeg_/blink182-40.jpeg",
-          title: "Blink-182 & Lil Wayne in Inglewood",
-          startTime: "2019-07-05 05:15:44",
-          venueAddress: "90 Wallis Road",
-          weather: "Rain",
-          city: "London"
-        },
-        {
-          imageUrl:
-            "https://d1marr3m5x4iac.cloudfront.net/images/block250/I0-001/033/452/240-0.jpeg_/blink182-40.jpeg",
-          title: "Blink-182 & Lil Wayne in Inglewood",
-          startTime: "2019-07-05 05:15:44",
-          venueAddress: "90 Wallis Road",
-          weather: "Rain",
-          city: "London"
-        },
-        {
-          imageUrl:
-            "https://d1marr3m5x4iac.cloudfront.net/images/block250/I0-001/033/452/240-0.jpeg_/blink182-40.jpeg",
-          title: "Blink-182 & Lil Wayne in Inglewood",
-          startTime: "2019-07-05 05:15:44",
-          venueAddress: "90 Wallis Road",
-          weather: "Rain",
-          city: "London"
-        },
-        {
-          imageUrl:
-            "https://d1marr3m5x4iac.cloudfront.net/images/block250/I0-001/033/452/240-0.jpeg_/blink182-40.jpeg",
-          title: "Blink-182 & Lil Wayne in Inglewood",
-          startTime: "2019-07-05 05:15:44",
-          venueAddress: "90 Wallis Road",
-          weather: "Rain",
-          city: "London"
-        }
-      ]
+      events: {}
     };
+    this.eventService = new EventService();
+    this.toggle = this.toggle.bind(this);
   }
 
   toggle(tab) {
@@ -330,6 +251,13 @@ export default class Event extends PureComponent {
         </Col>
       </Row>
     );
+  }
+
+  async componentDidMount() {
+    let response = await this.eventService.getLondonEvents();
+    if (ResponseResolver.isPositive(response)) {
+      this.setState({ events: response.data.content });
+    }
   }
 
   render() {
