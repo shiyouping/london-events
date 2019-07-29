@@ -31,13 +31,14 @@ public class CorsConfig implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-		httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
-		httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
-		httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET,HEAD,POST,PUT,PATCH,DELETE,OPTIONS,TRACE");
-		httpServletResponse.setHeader("Access-Control-Allow-Headers",
+		HttpServletResponse res = (HttpServletResponse) response;
+		res.setHeader("Access-Control-Allow-Origin", "*");
+		res.setHeader("Access-Control-Allow-Credentials", "true");
+		res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,POST,PUT,PATCH,DELETE,OPTIONS,TRACE");
+		res.setHeader("Access-Control-Allow-Headers",
 				"Origin,Accept,Content-Type,X-Requested-With,Access-Control-Request-Method,Access-Control-Request-Headers,Access-Control-Allow-Headers,Access-Control-Allow-Origin");
 		// httpServletResponse.setHeader("Access-Control-Expose-Headers", "");
+		chain.doFilter(request, res);
 	}
 
 	@Override
