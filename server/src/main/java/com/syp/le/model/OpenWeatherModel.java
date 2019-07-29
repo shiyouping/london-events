@@ -15,7 +15,7 @@ import com.alibaba.fastjson.annotation.JSONField;
  * @since 26 Jul 2019
  */
 @AutoProperty
-public class CurrentWeatherModel extends BaseModel {
+public class OpenWeatherModel extends BaseModel {
 
 	private static final long serialVersionUID = 1L;
 

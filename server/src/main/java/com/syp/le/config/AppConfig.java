@@ -23,6 +23,9 @@ public class AppConfig {
 	private OpenWeatherMap openWeatherMap = new OpenWeatherMap();
 
 	@Valid
+	private Weatherbit weatherbit = new Weatherbit();
+
+	@Valid
 	private TaskExecutor taskExecutor = new TaskExecutor();
 
 	public Eventful getEventful() {
@@ -39,6 +42,14 @@ public class AppConfig {
 
 	public void setOpenWeatherMap(OpenWeatherMap openWeatherMap) {
 		this.openWeatherMap = openWeatherMap;
+	}
+
+	public Weatherbit getWeatherbit() {
+		return weatherbit;
+	}
+
+	public void setWeatherbit(Weatherbit weatherbit) {
+		this.weatherbit = weatherbit;
 	}
 
 	public TaskExecutor getTaskExecutor() {
@@ -73,6 +84,29 @@ public class AppConfig {
 	}
 
 	public static class OpenWeatherMap {
+		@NotEmpty
+		private String apiKey;
+		@NotEmpty
+		private String baseUrl;
+
+		public String getApiKey() {
+			return apiKey;
+		}
+
+		public void setApiKey(String apiKey) {
+			this.apiKey = apiKey;
+		}
+
+		public String getBaseUrl() {
+			return baseUrl;
+		}
+
+		public void setBaseUrl(String baseUrl) {
+			this.baseUrl = baseUrl;
+		}
+	}
+
+	public static class Weatherbit {
 		@NotEmpty
 		private String apiKey;
 		@NotEmpty

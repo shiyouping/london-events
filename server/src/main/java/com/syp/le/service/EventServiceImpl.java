@@ -24,7 +24,7 @@ import org.springframework.util.CollectionUtils;
 import com.google.common.collect.Lists;
 import com.syp.le.client.EventfulClient;
 import com.syp.le.client.OpenWeatherMapClient;
-import com.syp.le.model.CurrentWeatherModel;
+import com.syp.le.model.OpenWeatherModel;
 import com.syp.le.model.CustomEventModel;
 import com.syp.le.model.EventCategoryModel;
 import com.syp.le.model.EventfulModel;
@@ -155,7 +155,7 @@ public class EventServiceImpl implements EventService {
 			return UNKNOWN;
 		}
 
-		CurrentWeatherModel weatherModel = weatherClient.getCurrentWeather(eventModel.getLatitude(),
+		OpenWeatherModel weatherModel = weatherClient.getCurrentWeather(eventModel.getLatitude(),
 				eventModel.getLongitude());
 
 		if (CollectionUtils.isEmpty(weatherModel.getWeather())) {

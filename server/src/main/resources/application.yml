@@ -5,6 +5,9 @@ app:
   open-weather-map:
     api-key: @openweathermap.api.key@
     base-url: http://api.openweathermap.org/data/2.5
+  weatherbit:
+    api-key: @weatherbit.api.key@
+    base-url: http://api.weatherbit.io/v2.0
 
 spring:
   # SPRING MVC (WebMvcProperties)

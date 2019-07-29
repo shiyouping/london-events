@@ -1,8 +1,9 @@
 package com.syp.le.client;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
-import com.syp.le.model.CurrentWeatherModel;
+import com.syp.le.model.OpenWeatherModel;
 
 /**
  * @author <a href="mailto:ricky.shiyouping@gmail.com">Ricky Shi</a>
@@ -16,8 +17,8 @@ public interface OpenWeatherMapClient {
 	 * 
 	 * See detailed document at https://openweathermap.org/current
 	 */
-	@Nonnull
-	CurrentWeatherModel getCurrentWeather(@Nonnull Float latitude, @Nonnull Float longitude);
+	@Nullable
+	OpenWeatherModel getCurrentWeather(@Nonnull Float latitude, @Nonnull Float longitude);
 
 	/*****************************************************************************
 	 * OpenWeatherMap doesn't provide free API of future weather for personal use.

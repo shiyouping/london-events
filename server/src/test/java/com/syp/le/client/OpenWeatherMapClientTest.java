@@ -11,7 +11,7 @@ import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.syp.le.model.CurrentWeatherModel;
+import com.syp.le.model.OpenWeatherModel;
 
 @RunWith(SpringRunner.class)
 @AutoConfigureWireMock(port = 8080)
@@ -29,18 +29,18 @@ public class OpenWeatherMapClientTest extends WiremockBase {
 		createWireMockStub("/weather", "wiremock-current-weather.json");
 
 		// When
-		CurrentWeatherModel currentWeatherModel = client.getCurrentWeather(51.54f, -0.02f);
+		OpenWeatherModel weatherModel = client.getCurrentWeather(51.54f, -0.02f);
 
 		// Then
-		assertThat(currentWeatherModel).isNotNull();
-		assertThat(currentWeatherModel.getName()).isEqualTo("Hackney");
-		assertThat(currentWeatherModel.getTime()).isEqualTo(1564150542l);
-		assertThat(currentWeatherModel.getTimezone()).isEqualTo(3600);
-		assertThat(currentWeatherModel.getWeather()).isNotNull();
-		assertThat(currentWeatherModel.getWeather().size()).isEqualTo(1);
-		assertThat(currentWeatherModel.getWeather().get(0).getMain()).isEqualTo("Clouds");
-		assertThat(currentWeatherModel.getWeather().get(0).getDescription()).isEqualTo("scattered clouds");
-		assertThat(currentWeatherModel.getWeather().get(0).getIcon()).isEqualTo("03d");
-		assertThat(currentWeatherModel.getWeather().get(0).getId()).isEqualTo("802");
+		assertThat(weatherModel).isNotNull();
+		assertThat(weatherModel.getName()).isEqualTo("Hackney");
+		assertThat(weatherModel.getTime()).isEqualTo(1564150542l);
+		assertThat(weatherModel.getTimezone()).isEqualTo(3600);
+		assertThat(weatherModel.getWeather()).isNotNull();
+		assertThat(weatherModel.getWeather().size()).isEqualTo(1);
+		assertThat(weatherModel.getWeather().get(0).getMain()).isEqualTo("Clouds");
+		assertThat(weatherModel.getWeather().get(0).getDescription()).isEqualTo("scattered clouds");
+		assertThat(weatherModel.getWeather().get(0).getIcon()).isEqualTo("03d");
+		assertThat(weatherModel.getWeather().get(0).getId()).isEqualTo("802");
 	}
 }

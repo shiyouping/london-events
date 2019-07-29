@@ -19,8 +19,8 @@ import org.springframework.data.domain.Pageable;
 import com.google.common.collect.Lists;
 import com.syp.le.client.EventfulClient;
 import com.syp.le.client.OpenWeatherMapClient;
-import com.syp.le.model.CurrentWeatherModel;
-import com.syp.le.model.CurrentWeatherModel.WeatherModel;
+import com.syp.le.model.OpenWeatherModel;
+import com.syp.le.model.OpenWeatherModel.WeatherModel;
 import com.syp.le.model.CustomEventModel;
 import com.syp.le.model.EventCategoryModel;
 import com.syp.le.model.EventCategoryModel.CategoryModel;
@@ -121,8 +121,8 @@ public class EventServiceTest {
 		return model;
 	}
 
-	private CurrentWeatherModel currentWeather() {
-		CurrentWeatherModel model = new CurrentWeatherModel();
+	private OpenWeatherModel currentWeather() {
+		OpenWeatherModel model = new OpenWeatherModel();
 		model.setName("London");
 		model.setWeather(Lists.newArrayList(weather()));
 		return model;

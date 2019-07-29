@@ -12,7 +12,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = PropertiesConfig.class)
 @TestPropertySource(properties = { "app.eventful.apiKey=test", "app.eventful.baseUrl=test",
-		"app.openWeatherMap.apiKey=test", "app.openWeatherMap.baseUrl=test" })
+		"app.openWeatherMap.apiKey=test", "app.openWeatherMap.baseUrl=test", "app.weatherbit.apiKey=test",
+		"app.weatherbit.baseUrl=test" })
 public class AppConfigTest {
 	@Autowired
 	private AppConfig appConfig;
