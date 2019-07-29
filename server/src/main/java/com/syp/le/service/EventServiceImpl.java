@@ -3,6 +3,10 @@ package com.syp.le.service;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,13 +27,14 @@ import org.springframework.util.CollectionUtils;
 
 import com.google.common.collect.Lists;
 import com.syp.le.client.EventfulClient;
-import com.syp.le.client.OpenWeatherMapClient;
-import com.syp.le.model.OpenWeatherModel;
+import com.syp.le.client.WeatherBitClient;
 import com.syp.le.model.CustomEventModel;
 import com.syp.le.model.EventCategoryModel;
 import com.syp.le.model.EventfulModel;
 import com.syp.le.model.EventfulModel.EventModel;
 import com.syp.le.model.EventfulModel.ImageModel;
+import com.syp.le.model.WeatherBitModel;
+import com.syp.le.model.WeatherBitModel.DayModel;
 import com.syp.le.utils.BeanUtil;
 import com.syp.le.utils.EventfulUtil;
 
@@ -42,14 +47,16 @@ import com.syp.le.utils.EventfulUtil;
 @CacheConfig(cacheNames = "events")
 public class EventServiceImpl implements EventService {
 
-	private static final String UNKNOWN = "Unknown";
 	private static final Logger logger = LoggerFactory.getLogger(EventServiceImpl.class);
+	private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+	private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	private static final String UNKNOWN = "Unknown";
 
 	private final EventfulClient eventfulClient;
-	private final OpenWeatherMapClient weatherClient;
+	private final WeatherBitClient weatherClient;
 
 	@Autowired
-	public EventServiceImpl(@Nonnull OpenWeatherMapClient weatherClient, @Nonnull EventfulClient eventfulClient) {
+	public EventServiceImpl(@Nonnull WeatherBitClient weatherClient, @Nonnull EventfulClient eventfulClient) {
 		checkNotNull(weatherClient, "weatherClient cannot be null");
 		checkNotNull(eventfulClient, "eventfulClient cannot be null");
 
@@ -155,18 +162,57 @@ public class EventServiceImpl implements EventService {
 			return UNKNOWN;
 		}
 
-		OpenWeatherModel weatherModel = weatherClient.getCurrentWeather(eventModel.getLatitude(),
+		WeatherBitModel weatherForecast = weatherClient.getWeatherForecast(eventModel.getLatitude(),
 				eventModel.getLongitude());
 
-		if (CollectionUtils.isEmpty(weatherModel.getWeather())) {
+		if (weatherForecast == null) {
 			return UNKNOWN;
 		}
 
-		String description = weatherModel.getWeather().get(0).getMain();
-		if (StringUtils.isBlank(description)) {
+		return getClosestWeather(eventModel.getStartTime(), weatherForecast.getData());
+	}
+
+	/**
+	 * 
+	 * There is a list of {@link DayModel}s with dates: 2019-07-29, 2019-07-30,
+	 * 2019-07-31 <br>
+	 * 
+	 * 1. If eventTime = 2019-07-26 18:00, then {@link DayModel} with date
+	 * 2019-07-29 will be matched <br>
+	 * 
+	 * 2. If eventTime = 2019-07-29 18:00, then {@link DayModel} with date
+	 * 2019-07-29 will be matched <br>
+	 * 
+	 * 3. If eventTime = 2019-07-31 18:00, then {@link DayModel} with date
+	 * 2019-07-31 will be matched <br>
+	 * 
+	 * 4. If eventTime = 2019-08-03 18:00, then {@link DayModel} with date
+	 * 2019-07-31 will be matched <br>
+	 * 
+	 */
+	private String getClosestWeather(String eventTime, List<DayModel> futureWeatherData) {
+		if (StringUtils.isBlank(eventTime) || CollectionUtils.isEmpty(futureWeatherData)) {
 			return UNKNOWN;
 		}
 
-		return description;
+		DayModel closestDay = null;
+		long min = Long.MAX_VALUE;
+		LocalDateTime start = LocalDateTime.parse(eventTime, DATE_TIME_FORMATTER);
+
+		for (DayModel day : futureWeatherData) {
+			LocalDateTime end = LocalDate.parse(day.getDate(), DATE_FORMATTER).atStartOfDay();
+			long difference = Math.abs(ChronoUnit.DAYS.between(start, end));
+
+			if (difference < min) {
+				min = difference;
+				closestDay = day;
+			}
+		}
+
+		if (closestDay.getWeather() == null || StringUtils.isBlank(closestDay.getWeather().getDescription())) {
+			return UNKNOWN;
+		}
+
+		return closestDay.getWeather().getDescription();
 	}
 }
