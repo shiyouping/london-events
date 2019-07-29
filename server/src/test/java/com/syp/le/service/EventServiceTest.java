@@ -58,7 +58,6 @@ public class EventServiceTest {
 		assertThat(page.getNumber()).isEqualTo(0);
 		assertThat(page.getNumberOfElements()).isEqualTo(1);
 		assertThat(page.getSize()).isEqualTo(30);
-		assertThat(page.getTotalElements()).isEqualTo(1);
 		assertThat(page.getTotalPages()).isEqualTo(1);
 		assertThat(page.getContent()).isNotNull();
 		assertThat(page.getContent().get(0).getCity()).isEqualTo("London");
