@@ -12,9 +12,11 @@ import {
   Jumbotron,
   Pagination,
   PaginationItem,
-  PaginationLink
+  PaginationLink,
+  Spinner
 } from "reactstrap";
 
+import "scenes/navigator/navigator.css";
 import EventTab from "components/event-tab/event-tab";
 import EventService from "services/rest/event-service";
 import ResponseResolver from "kernel/network/response-resolver";
@@ -36,18 +38,54 @@ export default class Event extends PureComponent {
     super(props);
 
     this.state = {
+      spinner: true,
       activeTab: CATEGORY_MUSIC,
+      page: 0,
+      size: 6,
+      totalPages: 0,
       events: {}
     };
+
     this.eventService = new EventService();
     this.toggle = this.toggle.bind(this);
+    this.onPaginationClick = this.onPaginationClick.bind(this);
   }
 
   toggle(tab) {
     if (this.state.activeTab !== tab) {
-      this.setState({
-        activeTab: tab
-      });
+      this.setState(
+        {
+          activeTab: tab,
+          page: 0,
+          totalPages: 0
+        },
+        () => {
+          this.getEvents();
+        }
+      );
+    }
+  }
+
+  async onPaginationClick(page) {
+    if (page !== this.state.page && page >= 0 && page < this.state.totalPages) {
+      await this.setState({ page });
+      await this.getEvents();
+    }
+  }
+
+  getSpinner() {
+    if (this.state.spinner) {
+      return (
+        <Container>
+          <br />
+          <Row>
+            <Col sm="12" md={{ size: 2, offset: 5 }}>
+              <Spinner color="primary" />
+            </Col>
+          </Row>
+          <br />
+        </Container>
+      );
     }
   }
 
@@ -231,21 +269,46 @@ export default class Event extends PureComponent {
   }
 
   getPagination() {
+    if (this.state.spinner) {
+      // Don't show spinner and pagination at the same time
+      return null;
+    }
+
     return (
       <Row>
         <Col sm="12" md={{ size: 4, offset: 5 }}>
           <Pagination aria-label="Page navigation">
             <PaginationItem>
-              <PaginationLink first href="#" />
+              <PaginationLink
+                first
+                onClick={() => {
+                  this.onPaginationClick(0);
+                }}
+              />
             </PaginationItem>
             <PaginationItem>
-              <PaginationLink previous href="#" />
+              <PaginationLink
+                previous
+                onClick={() => {
+                  this.onPaginationClick(this.state.page - 1);
+                }}
+              />
             </PaginationItem>
             <PaginationItem>
-              <PaginationLink next href="#" />
+              <PaginationLink
+                next
+                onClick={() => {
+                  this.onPaginationClick(this.state.page + 1);
+                }}
+              />
             </PaginationItem>
             <PaginationItem>
-              <PaginationLink last href="#" />
+              <PaginationLink
+                last
+                onClick={() => {
+                  this.onPaginationClick(this.state.totalPages - 1);
+                }}
+              />
             </PaginationItem>
           </Pagination>
         </Col>
@@ -253,22 +316,39 @@ export default class Event extends PureComponent {
     );
   }
 
-  async componentDidMount() {
-    let response = await this.eventService.getLondonEvents();
+  async getEvents() {
+    await this.setState({ events: {}, spinner: true });
+    let response = await this.eventService.getLondonEvents(
+      this.state.activeTab,
+      this.state.page,
+      this.state.size
+    );
+
     if (ResponseResolver.isPositive(response)) {
-      this.setState({ events: response.data.content });
+      let { content, number, totalPages } = response.data;
+      this.setState({
+        events: content,
+        spinner: false,
+        totalPages: totalPages,
+        page: number
+      });
     }
+  }
+
+  componentDidMount() {
+    this.getEvents();
   }
 
   render() {
     return (
       <Container>
-        <Jumbotron>
-          <h1>London Events</h1>
-          <p>Events and things to do in London.</p>
+        <Jumbotron className="background">
+          <h1 className="text-effect">London Events</h1>
+          <p className="text-effect">Events and things to do in London.</p>
         </Jumbotron>
         {this.getNav()}
         {this.getTabContent()}
+        {this.getSpinner()}
         {this.getPagination()}
       </Container>
     );
