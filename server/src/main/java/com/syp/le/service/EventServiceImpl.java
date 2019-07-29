@@ -106,7 +106,12 @@ public class EventServiceImpl implements EventService {
 		}
 
 		List<EventModel> eventModels = eventfulModel.getEvents().getEvent();
-		return new PageImpl<>(toCustomEventModels(eventModels), pageable, eventfulModel.getTotalItems());
+
+		// The total items returned from Eventful API is not accurate
+		// See details at https://api.eventful.com/docs/events/search
+		// So we have to calculate the approximate total by ourself
+		return new PageImpl<>(toCustomEventModels(eventModels), pageable,
+				eventfulModel.getPageCount() * eventfulModel.getPageSize());
 	}
 
 	private List<CustomEventModel> toCustomEventModels(List<EventModel> eventModels) {
