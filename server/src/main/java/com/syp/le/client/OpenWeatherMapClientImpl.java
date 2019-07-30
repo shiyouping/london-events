@@ -60,6 +60,9 @@ public class OpenWeatherMapClientImpl implements OpenWeatherMapClient {
 
 		try {
 			String response = restTemplate.getForObject(uri, String.class);
+
+			// Only useful data will be mapped to Java object
+			// Useless information will be discarded when parsing
 			return JSON.parseObject(response, OpenWeatherModel.class);
 		} catch (Exception e) {
 			logger.error("Failed to request or parse current weather", e);

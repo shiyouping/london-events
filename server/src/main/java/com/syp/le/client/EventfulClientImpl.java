@@ -121,6 +121,9 @@ public class EventfulClientImpl implements EventfulClient {
 		try {
 			response = restTemplate.getForObject(uri, String.class);
 			EventfulUtil.checkErrorResponse(response);
+
+			// Only useful data will be mapped to Java object
+			// Useless information will be discarded when parsing
 			return JSON.parseObject(response, EventCategoryModel.class);
 		} catch (Exception e) {
 			logger.error(String.format("Failed to request or parse category data. Response=%s", response), e);
