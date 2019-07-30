@@ -29,7 +29,7 @@ To guarantee the code quality and facilitate CI/CD in the future, different leve
 - Automated integration testing with [WireMock](http://wiremock.org/) and Spring Boot Test frameworks
 - Manual system testing and acceptance testing
 
-### 1.3. How to Run
+### 1.4. How to Run
 In order to run this server application in development environment, [Java](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) and [Maven](https://www.apache.org/) need to be installed first. Then execute the following command to start:
 ````java
 $ mvn spring-boot:run
@@ -63,7 +63,7 @@ From the architecture diagram, `UI Layer` is based on `Middle Layer` and `Non-UI
 Components on the same level are marked with the same colors. The components are visible to those components which are on the same or higher levels. That means components are able to call other components which are on the same or lower levels. For example, `SystemService` and `NotificationService` are allowed to call each other, and both of them are legal to use `EventEmitter`. However, `REST Service` will never utilize `React Framework` or `Application Level Service`.
 
 ### 2.2. How to Run
-In order to run this web application in development environment, [Node.js](https://nodejs.org/en/) needs to be installed first. Then execute the following command to start:
+In order to run this web application in development environment, [Node.js](https://nodejs.org/en/) needs to be installed first. Then execute the following commands to start:
 ````java
 $ npm install
 $ npm start
